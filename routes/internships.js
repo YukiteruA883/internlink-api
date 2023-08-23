@@ -8,13 +8,16 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/all', async (req, res) => {
-    try {
-      const _out = await get_all_internships(req.body)
-      return res.json(_out)
-    } catch (err) {
-      return res.json({ message: err })
-    }
-  })
+  try {
+      const uid = req.query.uid; // Extract the UID from the query parameters
+      const _out = await get_all_internships(uid);
+      return res.json(_out);
+  } catch (err) {
+      return res.status(400).json({ message: err });
+  }
+});
+
+
 
 router.post('/add', async (req, res) => {
     try {

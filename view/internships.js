@@ -5,16 +5,25 @@ const client = new MongoClient(db);
 const database_env = "internlink";
 const col_env = "internships";
 
-async function get_all_internships (req) {
+async function get_all_internships(uid) {
     try {
-        const db = client.db(database_env)
-        const col = db.collection(col_env)
-        const result = await col.find().toArray()
-        return { status: "true", message: "success", result: result }
-    } catch { err } {
-        return { status: "false", message: err }
+        await client.connect(); // Ensure the client is connected
+        const db = client.db(database_env);
+        const col = db.collection(col_env);
+        const query = { uid: uid };
+        
+        const result = await col.find(query).toArray();
+        console.log(result)
+        return { status: "true", message: "success", result: result };
+    } catch (err) {
+        return { status: "false", message: err };
+    } finally {
+        await client.close(); // Close the connection
     }
 }
+
+
+
 
 async function add_internship(req) {
     try {
@@ -48,4 +57,4 @@ async function add_internship(req) {
 }
 
 
-module.exports = { add_internship, get_all_internships};
+module.exports = { add_internship, get_all_internships };
