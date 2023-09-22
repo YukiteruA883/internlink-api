@@ -16,4 +16,13 @@ router.get('/all', async (req, res) => {
   }
 })
 
+router.post('/add', async (req, res) => {
+  try {
+    const _out = await add_offer(req.body);
+    return res.json(_out);
+  } catch (err) {
+    return res.status(400).json({ message: err });
+  }
+});
+
 module.exports = router;

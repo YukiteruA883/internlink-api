@@ -17,12 +17,8 @@ async function get_all_internships(uid) {
         return { status: "true", message: "success", result: result };
     } catch (err) {
         return { status: "false", message: err };
-    } finally {
-        await client.close(); // Close the connection
     }
 }
-
-
 
 
 async function add_internship(req) {
@@ -31,6 +27,7 @@ async function add_internship(req) {
         const db = client.db(database_env)
         const col = db.collection(col_env)
 
+        console.log("gothere")
         // hash the password
         // const salt = await bcrypt.genSalt(10);
         // const hashedPassword = await bcrypt.hash(req.password, salt);

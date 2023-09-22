@@ -28,4 +28,31 @@ async function check_offers(req) {
     }
 }
 
-module.exports = { get_all_offers, check_offers };
+async function add_offer(req){
+    try {
+        // connect to the database
+        const db = client.db(database_env)
+        const col = db.collection(col_env)
+
+        const offer = {
+            title: req.title,
+            company: req.company,
+            duration: req.duration,
+            image: req.image,
+            id: req.id
+        };
+
+        // insert the user into the database
+        const result = await col.insertOne(offer);
+        if (result.insertedCount > 0) {
+            return { status: "true", message: "User created successfully!" };
+        } else {
+            return { status: "false", message: "Failed to create user" };
+        }
+    } catch (err) {
+        console.error(err);
+        return { status: "false", message: err };
+    }
+}
+
+module.exports = { get_all_offers, check_offers, add_offer };

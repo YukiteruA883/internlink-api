@@ -34,7 +34,6 @@ async function create_user(req) {
         // connect to the database
         const db = client.db(database_env)
         const col = db.collection(col_env)
-
         // hash the password
         // const salt = await bcrypt.genSalt(10);
         // const hashedPassword = await bcrypt.hash(req.password, salt);
